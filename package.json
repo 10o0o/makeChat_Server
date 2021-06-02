@@ -1,0 +1,19 @@
+{
+  "name": "makechat_server",
+  "version": "1.0.0",
+  "description": "채팅 서비스 서버만들기",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10o0o/makeChat_Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/10o0o/makeChat_Server/issues"
+  },
+  "homepage": "https://github.com/10o0o/makeChat_Server#readme"
+}
