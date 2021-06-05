@@ -6,7 +6,6 @@ module.exports = async function forbiddenWords(context) {
   contextArr = context.split(" ");
   
   const badWords = await forbiddenWord.findAll();
-  console.log(badWords);
 
   for(const badWord of badWords) {
     // console.log(badWord.word)

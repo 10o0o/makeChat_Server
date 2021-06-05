@@ -17,7 +17,6 @@ module.exports = async function preventPapering (context) {
     if (comment.context.includes(context)) count++
   }
 
-  // console.log(count);
   // 만약 10개 중 3개가 넘는다면 도배로 간주하여 false 리턴
   if (count >= 3) {
     return true;
