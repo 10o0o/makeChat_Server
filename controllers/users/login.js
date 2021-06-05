@@ -7,6 +7,13 @@ dotenv.config();
 
 //로그인을 처리하는 로직입니다.
 module.exports = async (req, res) => {
+  // 요청의 body에 필요한 인자들이 있는지 확인합니다.
+  if (!req.body.email || !req.body.password) {
+    res.status(400).send({
+      data: null,
+      message: '이메일 혹은 비밀번호를 입력하지 않았습니다.'
+    })
+  }
 
   // 로그인 요청이 들어온 이메일이 유효한지 검사합니다.
   const userInfoWithEmail = await Users.findOne({

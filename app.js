@@ -24,8 +24,6 @@ app.post("/comment", controllers.addComment);
 app.delete("/comment", controllers.removeComment);
 app.patch("/comment", controllers.updateComment);
 app.post("/addBanWord", controllers.addBanWord);
-app.get("/accesstokenrequest", controllers.accessTokenRequest);
-app.get("/refreshtokenrequest", controllers.refreshTokenRequest);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
