@@ -11,9 +11,7 @@ module.exports = async (req, res) => {
   .send({"data": null, "message": "REFRESH TOKEN이 유효하지 않습니다!"})}
 
 
-
   const data = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_SECRET);
-  console.log(data)
   const userInfo = await Users.findOne({
     where: {userId: data.userId}
   })

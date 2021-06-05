@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     accessToken: token,
     data: resultObj,
     message: "ok"
-  })} else {
+  })} else { // ACCESSTOKEN이 유효하지 않다면 REFRESHTOKEN을 체크합니다.
     return refreshTokenRequest(req, res);
   }
 };

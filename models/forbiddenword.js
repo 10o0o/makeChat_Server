@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Comments extends Model {
+  class forbiddenWord extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,19 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Users, { foreignKey: 'userId' });
-
-      this.hasMany(models.LikeOrDislike, {
-        foreignKey: 'commentId',
-        onDelete: 'cascade',
-      });
     }
   };
-  Comments.init({
-    context: DataTypes.STRING
+  forbiddenWord.init({
+    word: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Comments',
+    modelName: 'forbiddenWord',
   });
-  return Comments;
+  return forbiddenWord;
 };

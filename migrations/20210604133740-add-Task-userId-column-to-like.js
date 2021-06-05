@@ -7,7 +7,7 @@ module.exports = {
     });
     await queryInterface.addConstraint("LikeOrDislikes", {
       fields: ["userId"],
-      type: "foreign Key",
+      type: "FOREIGN KEY",
       name: "like_userId_fk",
       references: {
         table: 'Users',

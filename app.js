@@ -19,6 +19,11 @@ app.use(cookieParser());
 
 app.post("/signin", controllers.login);
 app.post("/signUp", controllers.signUp);
+app.post("/like", controllers.like);
+app.post("/comment", controllers.addComment);
+app.delete("/comment", controllers.removeComment);
+app.patch("/comment", controllers.updateComment);
+app.post("/addBanWord", controllers.addBanWord);
 app.get("/accesstokenrequest", controllers.accessTokenRequest);
 app.get("/refreshtokenrequest", controllers.refreshTokenRequest);
 
