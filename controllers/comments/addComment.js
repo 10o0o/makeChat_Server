@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   }
 
   const token = authorization.split(' ')[1];
-  const data = jwt.verify(token, process.env.ACCESS_SECRET, (err, data) => {
+  const data = await jwt.verify(token, process.env.ACCESS_SECRET, (err, data) => {
     if(err) {
       return res.status(400).send({
         data: null,
@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     }
     return data;
   });
-  // (data)
+  console.log(data)
   const userInfo = await Users.findOne({
     where: {id: data.id}
   })
@@ -44,7 +44,6 @@ module.exports = async (req, res) => {
 
   // 금지어 포함 검사
   const isForbiddenWord = await forbiddenWords(req.body.context);
-  console.log(isForbiddenWord);
   if (isForbiddenWord) {
     return res.status(400).send({
       data: null,
