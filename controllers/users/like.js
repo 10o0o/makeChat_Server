@@ -11,7 +11,15 @@ module.exports = async (req, res) => {
   }
 
   const token = authorization.split(' ')[1];
-  const data = jwt.verify(token, process.env.ACCESS_SECRET);
+  const data = await jwt.verify(token, process.env.ACCESS_SECRET, (err, data) => {
+    if(err) {
+      return res.status(400).send({
+        data: null,
+        message: '토큰이 만료되거나 유효하지 않습니다.'
+      })
+    }
+    return data;
+  });
   // console.log(data)
   const userInfo = await Users.findOne({
     where: {id: data.id}
@@ -19,17 +27,15 @@ module.exports = async (req, res) => {
 
   // body에 필요 인자가 있는지 확인합니다.
   if (!req.body.commentId || !req.body.userLike) {
-    res.status(400).send({
+    return res.status(400).send({
       data: null,
       message: '해당 댓글 정보(commentId)와 좋아요 싫어요 유무(likeOrDislike)가 없습니다.'
     })
   }
 
-  // console.log(req.body.userLike)
-
   // userLike 인자가 '1'(좋아요) 혹은 '-1'(싫어요) 로 들어오는지 체크합니다.
   if (req.body.userLike !== '-1' && req.body.userLike !== '1') {
-    res.status(400).send({
+    return res.status(400).send({
       data: null,
       message: 'userLike인자는 -1 혹은 1이여야 합니다.'
     });
@@ -47,7 +53,7 @@ module.exports = async (req, res) => {
   })
 
   if (!comment) {
-    res.status(400).send({
+    return res.status(400).send({
       data: null,
       message: '해당 댓글이 없습니다.'
     })
@@ -64,7 +70,7 @@ module.exports = async (req, res) => {
     await LikeOrDislike.create(newLike, {
       include: [Users, Comments]
     });
-    res.status(200).send({
+    return res.status(200).send({
       data: newLike,
       message: '성공적으로 생성되었습니다.'
     })
@@ -77,11 +83,10 @@ module.exports = async (req, res) => {
       include: [Users, Comments],
     });
 
-    // console.log(DBcomment);
     DBcomment.userLike = req.body.userLike;
     await DBcomment.save();
 
-    res.status(200).send({
+    return res.status(200).send({
       data: DBcomment,
       message: '성공적으로 업데이트 하였습니다.'
     })

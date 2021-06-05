@@ -1,7 +1,6 @@
 const { Users, Comments } = require('../../models');
 const jwt = require('jsonwebtoken');
-const { preventPapering } = require('../../utills');
-const forbiddenWords = require('../../utills/forbiddenWords');
+const { preventPapering, forbiddenWords } = require('../../utills');
 
 
 //로그인을 처리하는 로직입니다.
@@ -9,7 +8,7 @@ module.exports = async (req, res) => {
   // 요청에서 ACCESS TOKEN을 검사하여 유저를 특정합니다.
   const authorization = req.headers['authorization'];
   if (!authorization) {
-    res.status(400).send({ "data": null, "message": "ACCESS TOKEN이 유효하지 않습니다."  })
+    return res.status(400).send({ "data": null, "message": "ACCESS TOKEN이 유효하지 않습니다."  })
   }
 
   const token = authorization.split(' ')[1];
@@ -17,21 +16,22 @@ module.exports = async (req, res) => {
     if(err) {
       return res.status(400).send({
         data: null,
-        message: '토큰이 만료되었습니다.'
+        message: '토큰이 만료되거나 유효하지 않습니다.'
       })
     }
     return data;
   });
-  console.log(data)
+
   const userInfo = await Users.findOne({
     where: {id: data.id}
   })
 
   // 해당 유저의 댓글의 내용이 없을 시 에러 발생
-  if (!req.body.context) res.status(400).send({
+  if (!req.body.context) {
+    return res.status(400).send({
     data: null,
     messgae: '내용을 입력하세요(context)'
-  })
+  })}
 
   // 도배 검사
   const isPapering = await preventPapering(req.body.context);

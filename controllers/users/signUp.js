@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   // 만약 필요한 정보가 들어오지 않는다면 에러 처리를 해줍니다.
   if (!nickname | !name | !password | !email) {
     console.log(nickname, name, password, email)
-    res.status(400).send({
+    return res.status(400).send({
       data: null,
       message: '이메일, 패스워드, 이름, 닉네임을 전부 입력해야 합니다.'
     })
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
   });
   
   if (conflictUserWithEmail) {
-    res.status(409).send({
+    return res.status(409).send({
       data: null,
       message: '이미 사용중인 이메일입니다.'
     })
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
   });
   
   if (conflictUserWithNickname) {
-    res.status(409).send({
+    return res.status(409).send({
       data: null,
       message: '이미 사용중인 닉네임입니다.'
     })
@@ -62,8 +62,8 @@ module.exports = async (req, res) => {
     delete user.password;
     
   
-    res.status(200).send({
-     data: user,
+    return res.status(200).send({
+      data: user,
       message: '회원가입이 완료되었습니다.'
     });
   })

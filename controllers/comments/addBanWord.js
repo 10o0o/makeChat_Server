@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     word
   })
 
-  res.status(200).send({
+  return res.status(200).send({
     data: word,
     message: '성공적으로 추가했습니다.'
   })

@@ -1,4 +1,3 @@
-
 module.exports = {
   login: require('./users/login'),
   refreshTokenRequest: require('./users/refreshTokenRequest'),
